@@ -10,8 +10,8 @@ const themeSchema = mongoose.Schema({
   likes: [
     {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "User",
-    },
+      ref: "User"
+    }
   ],
 });
 
