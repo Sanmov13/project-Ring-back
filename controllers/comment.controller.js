@@ -7,12 +7,12 @@ module.exports.commentController = {
             theme: req.body.theme,
             user: req.body.user
         })
-        const result = await data.populate('user')
+        const result = await data.populate('theme user')
         res.json(result)
     },
 
     getComments: async (req, res) => {
-        const data = await Comment.find().populate('user')
+        const data = await Comment.find().populate('theme user')
         res.json(data)
     }
 }
