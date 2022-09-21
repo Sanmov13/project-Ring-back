@@ -9,7 +9,11 @@ const commentSchema = mongoose.Schema({
     user: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'User'
-    }
+    },
+    like: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User'
+    }]
 });
 
 const Comment = mongoose.model("Comment", commentSchema)
