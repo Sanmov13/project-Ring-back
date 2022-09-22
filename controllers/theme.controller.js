@@ -12,6 +12,7 @@ module.exports.themeController = {
       text: req.body.text,
       user: req.body.user,
       likes: req.body.likes,
+      image: req.body.image
     });
     await res.json(data);
   },
