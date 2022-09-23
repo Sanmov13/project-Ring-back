@@ -1,9 +1,12 @@
 const { commentController } = require('../controllers/comment.controller');
 const Router = require('express');
 const router = Router();
-const authmiddleware = require('../middleware/auth.middleware')
+const authMiddleware = require('../middleware/auth.middleware');
 
-router.post('/comment',authmiddleware, commentController.addComment);
+router.post('/comment', authMiddleware, commentController.addComment);
 router.get('/comments', commentController.getComments);
+router.patch('/likeAdd/:id', commentController.addLike)
+router.patch('/likeDel/:id', commentController.delLike)
+router.delete('/delComment/:id', authMiddleware, commentController.deleteComment)
 
 module.exports = router;

@@ -13,6 +13,7 @@ const themeSchema = mongoose.Schema({
       ref: "User"
     }
   ],
+  image: String
 });
 
 const Theme = mongoose.model("Theme", themeSchema);
