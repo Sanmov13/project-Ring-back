@@ -29,5 +29,46 @@ module.exports.commentController = {
             $pull: { like: req.body.like }
         })
         res.json(data)
+    },
+
+    deleteComment: async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const comment = await Comment.findById(id)
+            if (comment.user.toString() === req.user.id) {
+
+                await comment.remove();
+
+                return res.json(comment);
+            }
+            return res.status(401).json('Ошибка. Нет доступа')
+
+        } catch (e) {
+            
+            return res.status(401).json('Ошибка: ' + e.toString())
+        }
     }
 }
+
+// deleteComment: async (req, res) => {
+//     const { id } = req.params;
+
+//     try {
+//      const comment = await Comment.findById(id)
+//      console.log(comment.user.toString())
+//      console.log(comment.user._id)
+//      if (comment.user.toString() === req.user.id) {
+//       await comment.remove();
+    
+//       return res.json('Deleted')
+//      }
+
+//      return res.status(401).json("Ошибка. Нет доступа")
+//  } catch (e) {
+
+//      return res.status(401).json('Ошибка: ' + e.toString())
+//  }
+    
+//  }
+// }
