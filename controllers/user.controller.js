@@ -1,4 +1,5 @@
 const User = require('../models/user.model')
+const Card = require("../models/Card.model");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -46,5 +47,49 @@ module.exports.userController = {
         })
 
         return res.json({ token, login1 })
-    }
-}
+    },
+
+
+    addInBasket: async (req, res) => {
+        try {
+          const user = await User.findByIdAndUpdate(req.body.userId, {
+            $addToSet: { basket: req.body.cardId },
+          }).populate("basket");
+          res.json(user);
+        } catch (e) {
+          res.json(e);
+        }
+      },
+      removeFromBasket: async (req, res) => {
+        try {
+          const user = await User.findByIdAndUpdate(req.body.userId, {
+            $pull: { basket: req.body.cardId },
+          }).populate("basket");
+          const card = await Card.findByIdAndUpdate(req.body.cardId, {
+            countInBasket: 1
+          })
+          res.json(card);
+        } catch (e) {
+          res.json(e);
+        }
+      },
+      removeAllBasket: async (req, res) => {
+        try {
+          const user = await User.findByIdAndUpdate(req.body.userId, {
+            $set: { basket: []}
+          }).populate('basket')
+          res.json(user)
+        } catch (e) {
+          res.json(e)
+        }
+      },
+      getBasket: async (req, res) => {
+        try {
+          const user = await User.findById(req.params.userId).populate("basket");
+          res.json(user)
+        } catch (e) {
+            res.json(e)
+        }
+      },
+
+};
