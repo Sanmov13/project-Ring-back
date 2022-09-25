@@ -24,4 +24,25 @@ module.exports.cardController = {
     }
   },
 
+countPlus: async (req, res) => {
+    try {
+        const card = await Card.findByIdAndUpdate(req.body.cardId, {
+            $inc : {countInBasket: 1}
+        })
+        res.json(card)
+    } catch (e) {
+        res.json(e)
+    }
+  },
+  countMinus: async (req, res) => {
+    try {
+        const card = await Card.findByIdAndUpdate(req.body.cardId, {
+            $inc : {countInBasket: -1}
+        })
+        res.json(card)
+    } catch (e) {
+        res.json(e)
+    }
+  }
+  
 };
